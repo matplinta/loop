@@ -2,22 +2,21 @@
 shopt -s expand_aliases
 source ~/.profile
 if [ $# -eq 0 ]; then
-    echo "usage: loop <interval> <command-with-params>"
+    echo "usage: loop [<interval>] <command-with-params>"
     exit 1
 fi
 
-echo Run \""${@:2}"\" every "$1" seconds:
-
-re='^[0-9]+$'
-if ! [[ $1 =~ $re ]] ; then
+if ! [[ $1 =~ ^[0-9]+$ ]] ; then
 #    echo "error: sleep time argument is not a number" >&2; exit 1
-    echo "Assuming default interval 1 second."
+    echo ":: Assuming default interval 1 second"
+    echo Run \""${@:1}"\" every second:
     while true
     do
         eval "${@:1}"
         sleep 1
     done
 else 
+    echo Run \""${@:2}"\" every "$1" seconds:
     while true
     do
         eval "${@:2}"
